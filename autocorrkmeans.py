@@ -37,8 +37,7 @@ def calculate_centroids(data, labels, k):
         centroids[i] = centroid
     return centroids
 
-lat_long_uf = pd.read_csv("lat_long_bacias.csv")
-lat_long = lat_long_uf[['latitude', 'longitude']]
+
 
 def normalize_custom(arr, vmin, vmax):
     """Normalize array between vmin and vmax."""
@@ -521,7 +520,9 @@ def kmeans_state(state, lat_long_scale, latent_representations_np, latent_space_
     - autocorr: autocorrelation scores for each k
     """
     print(f"Processing state: {state}")
-    state_index = list(lat_long_uf[lat_long_uf[col] == state].index)
+    lat_long_scale = pd.read_csv("lat_long_bacias.csv")
+    lat_long = lat_long_scale[['latitude', 'longitude']]
+    state_index = list(lat_long_scale[lat_long_scale[col] == state].index)
     state_train = latent_representations_np[state_index, :]
     gc.collect()
     state_train = np.nan_to_num(state_train)
